@@ -4,16 +4,22 @@
 	<title>Django Jquery</title>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 	<script type="text/javascript">
+$(document).ready(function($) {
+		$('#pony_form').on("submit", function(e){
+    	e.preventDefault();
+    	$.ajax({
+    		type: "POST",
+    		url: "{% url guardar-user %}",
+    		data: $("#pony_form").serialize(),
+    		success: function(msg){
+    			$("#mensajes_pro").html(msg);
+    			//$('form :input').val("");
+    			$('#pony_form')[0].reset();
+    		}
+    	});
 
-    $('#sendbutton').click(function() {
-      //var data = $("#ajaxwrapper").serializeArray()
-      //console.log(data)
-      $.post("{% url guardar-user %}", $("#ajaxwrapper").serialize(),
-        function(data) {
-          // call callback
-          alert(data);
-       }); 
     });
+});	
 	// $(function() {
  //      var form = $("#pony_form");
  //      form.submit(function(e) {
@@ -34,13 +40,13 @@
 </head>
 
 <body>
-	<div id="message_area"></div>
-	<form id="pony_form" method="POST" action="">
-	    <div id="ajaxwrapper">
+	<div id="mensajes_pro"></div>
+	<form id="pony_form" method="POST">
+	    
 	    {% csrf_token %}
 	    {{form.as_ul}}
-	    <p id="sendwrapper"><input type="submit" value="Send" id="sendbutton" ></p>
-	    </div>
+	    <input type="submit" value="Send">
+	   
 	</form>
 </body>
 </html>
