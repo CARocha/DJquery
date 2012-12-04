@@ -14,15 +14,25 @@ em { font-weight: bold; padding-right: 1em; vertical-align: top; }
 </style>
 	<script type="text/javascript">
 $(document).ready(function($) {
-		$(':input').addClass('required');
-		$('form').find(':input,:radio,:checkbox').addClass('required');
-		$('input[type="text"]').addClass("required");
-		// $('#id_apellido').addClass('required');
-		// $('#id_edad').addClass('required');
-		// $('#id_twitter').addClass('required');
-
+		//$('input[type="text"]').addClass("required");
+		$("#pony_form").validate({
+			rules: {
+			    edad: {
+			      required: true,
+			      number: true
+			    },
+			    nombre: {
+			    	required: true
+			    },
+			    apellido: {
+			    	required: true
+			    },
+			    twitter: {
+			    	required: true
+			    }
+			  }
+		});
 		$('#pony_form').on("submit", function(e){
-			$("#pony_form").validate();
     		e.preventDefault();
     	$.ajax({
     		type: "POST",
@@ -36,24 +46,8 @@ $(document).ready(function($) {
     	});
 
     });
-});	
-	// $(function() {
- //      var form = $("#pony_form");
- //      form.submit(function(e) {
- //      	e.preventDefault();
- //          $("#sendbutton").attr('disabled', true)
- //          $("#sendwrapper").prepend('<span>Sending message, please wait... </span>')
- //          $("#ajaxwrapper").load(
- //              form.attr('action') + ' #ajaxwrapper',
- //              form.serializeArray(),
- //              function(responseText, responseStatus) {
- //                  $("#sendbutton").attr('disabled', false)
- //                  window.parent.location="/"
- //              }
- //          );
- //      });
- //  });
-	</script>
+});
+</script>
 </head>
 
 <body>
@@ -61,7 +55,12 @@ $(document).ready(function($) {
 	<form id="pony_form" method="POST">
 	    
 	    {% csrf_token %}
-	    {{form.as_ul}}
+	    {% for field in form %}
+    	<div class="fieldWrapper">
+        	{{ field.errors }}
+        	{{ field.label_tag }}: {{ field }}
+    	</div>
+{% endfor %}
 	    <input type="submit" value="Send">
 	   
 	</form>

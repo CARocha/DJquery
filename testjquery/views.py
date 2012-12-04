@@ -16,8 +16,11 @@ def guardar_user(request):
 		form = UsuarioForm(request.POST)
 		if form.is_valid():
 			form.save()
-	return HttpResponse(json.dumps("se ha guardado con exito!!"),
-                	mimetype="application/json")
+			return HttpResponse(json.dumps("Se ha guardado con exito!!"),
+                							mimetype="application/json")
+		else:
+			return HttpResponse(json.dumps("Corrija los siguientes errores!!"),
+                							mimetype="application/json")
 
 def buscar_user(request, id):
 	buscar = get_object_or_404(Usuario, id=id)
