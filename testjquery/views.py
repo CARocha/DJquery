@@ -16,10 +16,10 @@ def guardar_user(request):
 		form = UsuarioForm(request.POST)
 		if form.is_valid():
 			form.save()
-			return HttpResponse(json.dumps("Se ha guardado con exito!!"),
+			return HttpResponse(json.dumps("exito"),
                 							mimetype="application/json")
 		else:
-			return HttpResponse(json.dumps("Corrija los siguientes errores!!"),
+			return HttpResponse(json.dumps("errores"),
                 							mimetype="application/json")
 
 def buscar_user(request, id):
