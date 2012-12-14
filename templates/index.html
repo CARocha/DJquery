@@ -39,23 +39,33 @@ $(document).ready(function($) {
 		});
 		$('#pony_form').on("submit", function(e){
     		e.preventDefault();
-    	$.ajax({
-    		type: "POST",
-    		url: "{% url guardar-user %}",
-    		data: $("#pony_form").serialize(),
-    		success: function(msg){
-          if (msg == "exito"){
-            $("#mensajes_pro").html(msg);
-            //$('form :input').val("");
-            $('#pony_form')[0].reset();
-            alertify.success("This is a success message.");
-          }
-          else {
-            $("#mensajes_pro").html("Ocurrieron errores por favor corrijalos");
-            alertify.error("This is an error message.");
-          }	
-    		}
-    	});
+    		$.post('{% url guardar-user %}', $("#pony_form").serialize(),
+    			function(data) {
+    				if (data == "exito"){
+			            $('#pony_form')[0].reset();
+			            alertify.success("Se ha guardado con exito el registro.");
+			          }
+			          else {
+			            alertify.error("Ocurrieron errores por favor corrijalos");
+			          }
+			});
+	    	/*$.ajax({
+	    		type: "POST",
+	    		url: "{% url guardar-user %}",
+	    		data: $("#pony_form").serialize(),
+	    		success: function(msg){
+			          if (msg == "exito"){
+			            $("#mensajes_pro").html(msg);
+			            //$('form :input').val("");
+			            $('#pony_form')[0].reset();
+			            alertify.success("This is a success message.");
+			          }
+			          else {
+			            $("#mensajes_pro").html("Ocurrieron errores por favor corrijalos");
+			            alertify.error("This is an error message.");
+			          }	
+	    		}
+	    	});*/
 
     });
 
