@@ -22,9 +22,13 @@ def guardar_user(request):
 			return HttpResponse(json.dumps("errores"),
                 							mimetype="application/json")
 
-def buscar_user(request, id):
-	buscar = get_object_or_404(Usuario, id=id)
-	return HttpResponse(json.dumps(buscar),
+def buscar_user(request):
+	if request.method == 'GET':
+		request.session['usuario2'] = request.GET.get('usuario')
+	print request.session['usuario2']
+	buscar = Usuario.objects.filter(nombre__icontains='Carlos')
+	lista = [x.nombre for x in buscar]
+	return HttpResponse(json.dumps(list(lista)),
 		                mimetype="application/json")
 
 def modificar_user(request, id):

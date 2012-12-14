@@ -70,6 +70,15 @@ $(document).ready(function($) {
     });
 
     log1.onclick = function () { alertify.log("This is a standard log message."); return false; };
+
+    //buscar usuarios
+    $('#buscarUsuario').on('submit', function(e){
+    	e.preventDefault()
+    	var nombre = $('#usuario').val();
+    	$.getJSON('/buscar-user/?ids='+nombre, function(json) {
+    		alert("JSON Data: " + json);
+    	});
+    }); //cierra el submit de buscar usuario
 });
 </script>
 </head>
@@ -90,5 +99,12 @@ $(document).ready(function($) {
 	</form>
 
   <a class="button-primary" href="#" id="log1">Notification</a>
+
+  <hr>
+  <h2>buscar usuario</h2>
+  <form id="buscarUsuario" method="GET">
+  	<input type="text" name="usuario" id="usuario">
+  	<input type="submit" value="buscar">
+  </form>
 </body>
 </html>
