@@ -75,8 +75,13 @@ $(document).ready(function($) {
     $('#buscarUsuario').on('submit', function(e){
     	e.preventDefault()
     	var nombre = $('#usuario').val();
-    	$.getJSON('/buscar-user/?ids='+nombre, function(json) {
-    		alert("JSON Data: " + json);
+    	$.getJSON('/buscar-user/?user='+nombre, function(data) {
+    		if (data != ''){
+    			$('#poneraca').html('tu madre');
+    		}
+    		else {
+    			$('#poneraca').html('Clase loquera no hay dato');
+    		}
     	});
     }); //cierra el submit de buscar usuario
 });
@@ -106,5 +111,7 @@ $(document).ready(function($) {
   	<input type="text" name="usuario" id="usuario">
   	<input type="submit" value="buscar">
   </form>
+  <h3> <div id="poneraca"></div> </h3>
+   <div id="poneraca2"></div>
 </body>
 </html>
